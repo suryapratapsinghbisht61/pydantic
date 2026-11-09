@@ -1,12 +1,14 @@
 from pydantic import BaseModel,EmailStr,AnyUrl, Field
-from typing import Dict
+from typing import Dict,Annotated
 
 class Patient(BaseModel):
-    name:str = Field(max_length=50)
+    name:Annotated[str , Field(max_length=50,title='name of the patient',
+    description='give naem in less then 50 char',examples=['surya','elon'])]
     age:int = Field(gt=0)
     contact_info :Dict[str,str]
     email:EmailStr # used for varifying email formate
     linkedin_url:AnyUrl #checks the url formate 
+    marid:bool = Field(default=None)
     
 def insert_data(patient:Patient):
     print(patient.name)
